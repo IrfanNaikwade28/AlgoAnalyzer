@@ -20,8 +20,22 @@ int linearSearch(int arr[], int n, int target)
     }
     return -1;
 }
-
-
+int binarySearch(int arr[], int n, int target)
+{
+    int left = 0, right = n - 1;
+    while (left <= right)
+    {
+        int mid = left + (right - left) / 2;
+        cout << "Checking element at index " << mid << ": " << arr[mid] << endl;
+        if (arr[mid] == target)
+            return mid;
+        else if (arr[mid] < target)
+            left = mid + 1;
+        else
+            right = mid - 1;
+    }
+    return -1;
+}
 
 void bubbleSort(int arr[], int n)
 {
@@ -41,7 +55,35 @@ void bubbleSort(int arr[], int n)
     cout<<"\nSorted Array:\n";
     printArray(arr, n);
 }
+int partition(int arr[], int low, int high)
+{
+    int pivot = arr[high];
+    int i = low - 1;
+    for (int j = low; j < high; ++j)
+    {
+        if (arr[j] < pivot)
+        {
+            ++i;
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+    int temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
 
+    return i + 1;
+}
+void quickSort(int arr[], int low, int high)
+{
+    if (low < high)
+    {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
 
 int main()
 {
@@ -83,7 +125,20 @@ int main()
                     cout << "Element not found" << endl;
                 break;
             }
-           
+            case 2:
+            {
+                cout << "\n-- Selected Algorithm: Binary Search --\n";
+                cout << "Enter target value: ";
+                int target;
+                cin >> target;
+                quickSort(arr, 0, n - 1);
+                int index = binarySearch(arr, n, target);
+                if (index != -1)
+                    cout << "Element found at index " << index << endl;
+                else
+                    cout << "Element not found" << endl;
+                break;
+            }
             case 3:
                 cout << "\n-- Selected Algorithm: Bubble Sort --\n";
                 bubbleSort(arr, n);
