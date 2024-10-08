@@ -55,6 +55,22 @@ void bubbleSort(int arr[], int n)
     cout<<"\nSorted Array:\n";
     printArray(arr, n);
 }
+void selectionSort(int arr[], int n)
+{
+    for (int i = 0; i < n - 1; ++i)
+    {
+        int minIdx = i;
+        for (int j = i + 1; j < n; ++j)
+        {
+            if (arr[j] < arr[minIdx])
+                minIdx = j;
+        }
+        int temp = arr[i];
+        arr[i] = arr[minIdx];
+        arr[minIdx] = temp;
+        printArray(arr, n);
+    }
+}
 int partition(int arr[], int low, int high)
 {
     int pivot = arr[high];
@@ -150,7 +166,8 @@ int main()
                 cout << "\nWorking";
                 break;
             case 6:
-                cout << "\nWorking";
+                cout << "\n-- Selected Algorithm: Selection Sort --\n";
+                selectionSort(arr, n);
                 break;
             case 7:
                 cout << "\nWorking";
