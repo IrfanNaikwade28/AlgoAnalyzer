@@ -202,7 +202,9 @@ int main()
                 printArray(arr, n);
                 break;
             case 5:
-                cout << "\nWorking";
+                cout << "\n-- Selected Algorithm: Quick Sort --\n";
+                quickSort(arr, 0, n - 1);
+                printArray(arr, n);
                 break;
             case 6:
                 cout << "\n-- Selected Algorithm: Selection Sort --\n";
