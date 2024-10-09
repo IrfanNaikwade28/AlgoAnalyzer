@@ -9,7 +9,6 @@ void printArray(int arr[], int n)
     }
     cout << endl;
 }
-
 int linearSearch(int arr[], int n, int target)
 {
     for (int i = 0; i < n; ++i)
@@ -137,7 +136,21 @@ void mergeSort(int arr[], int left, int right)
         merge(arr, left, mid, right);
     }
 }
-
+void insertionSort(int arr[], int n)
+{
+    for (int i = 1; i < n; ++i)
+    {
+        int key = arr[i];
+        int j = i - 1;
+        while (j >= 0 && arr[j] > key)
+        {
+            arr[j + 1] = arr[j];
+            --j;
+        }
+        arr[j + 1] = key;
+        printArray(arr, n);
+    }
+}
 int main()
 {
     char choice;
@@ -211,7 +224,8 @@ int main()
                 selectionSort(arr, n);
                 break;
             case 7:
-                cout << "\nWorking";
+                cout << "\n-- Selected Algorithm: Insertion Sort --\n";
+                insertionSort(arr, n);
                 break;
             default:
                 cout << "Invalid choice" << endl;
