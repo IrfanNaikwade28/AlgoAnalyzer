@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 using namespace std;
 
 void printArray(int arr[], int n)
@@ -33,9 +34,8 @@ int binarySearch(int arr[], int n, int target)
         else
             right = mid - 1;
     }
-    return -1;
+    return 1;
 }
-
 void bubbleSort(int arr[], int n)
 {
     for (int i = 0; i < n - 1; ++i)
@@ -51,7 +51,7 @@ void bubbleSort(int arr[], int n)
             }
         }
     }
-    cout<<"\nSorted Array:\n";
+    cout << "\nSorted Array:\n";
     printArray(arr, n);
 }
 void selectionSort(int arr[], int n)
@@ -82,11 +82,13 @@ int partition(int arr[], int low, int high)
             int temp = arr[i];
             arr[i] = arr[j];
             arr[j] = temp;
+            printArray(arr, high + 1);
         }
     }
     int temp = arr[i + 1];
     arr[i + 1] = arr[high];
     arr[high] = temp;
+    printArray(arr, high + 1);
 
     return i + 1;
 }
@@ -98,6 +100,9 @@ void quickSort(int arr[], int low, int high)
         quickSort(arr, low, pi - 1);
         quickSort(arr, pi + 1, high);
     }
+}
+void quickSortWrapper(int arr[], int n) {
+    quickSort(arr, 0, n - 1);
 }
 void merge(int arr[], int left, int mid, int right)
 {
@@ -124,8 +129,9 @@ void merge(int arr[], int left, int mid, int right)
         arr[k++] = L[i++];
     while (j < n2)
         arr[k++] = R[j++];
-}
 
+    printArray(arr, right + 1);
+}
 void mergeSort(int arr[], int left, int right)
 {
     if (left < right)
@@ -136,6 +142,10 @@ void mergeSort(int arr[], int left, int right)
         merge(arr, left, mid, right);
     }
 }
+void mergeSortWrapper(int arr[], int n) {
+    mergeSort(arr, 0, n - 1);
+}
+
 void insertionSort(int arr[], int n)
 {
     for (int i = 1; i < n; ++i)
@@ -151,16 +161,44 @@ void insertionSort(int arr[], int n)
         printArray(arr, n);
     }
 }
+double measureSortingTime(void (*sortFunction)(int[], int), int arr[], int n)
+{
+    clock_t start = clock();
+    sortFunction(arr, n);
+    clock_t end = clock();
+
+    double timeTaken = double(end - start) / CLOCKS_PER_SEC;
+    cout << "Time taken: " << timeTaken << " seconds" << endl;
+}
+void measureSearchingTime(int (*searchFunction)(int[], int, int), int arr[], int n, int target) {
+    clock_t start = clock(); // Start timer
+    int index = searchFunction(arr, n, target); // Call the search function
+    clock_t end = clock(); // End timer
+
+    double timeTaken = double(end - start) / CLOCKS_PER_SEC; // Calculate time taken
+    cout << "Time taken: " << timeTaken << " seconds" << endl;
+
+    if (index != -1)
+        cout << "Element found at index " << index << endl;
+    else
+        cout << "Element not found" << endl;
+}
 int main()
 {
     char choice;
     do
     {
+        cout << "\n------------------------------------\n";
         cout << "1. Linear Search\n2. Binary Search\n3. Bubble Sort\n";
         cout << "4. Merge Sort\n5. Quick Sort\n6. Selection Sort\n";
         cout << "7. Insertion Sort\n";
+        cout << "------------------------------------\n";
         cout << "\n-- Select an Algorithm by entering its number: ";
 
+        // Insert the current element at the correct position
+
+
+        // Print the array after each iteration
         int algo_choice;
         cin >> algo_choice;
 
@@ -178,57 +216,55 @@ int main()
 
         switch (algo_choice)
         {
-            case 1:
-            {
-                cout << "\n-- Selected Algorithm: Linear Search --\n";
-                cout << "Enter target value: ";
-                int target;
-                cin >> target;
-                int index = linearSearch(arr, n, target);
-                if (index != -1)
-                    cout << "\nElement found at index " << index << endl;
-                else
-                    cout << "Element not found" << endl;
-                break;
-            }
-            case 2:
-            {
-                cout << "\n-- Selected Algorithm: Binary Search --\n";
-                cout << "Enter target value: ";
-                int target;
-                cin >> target;
-                quickSort(arr, 0, n - 1);
-                int index = binarySearch(arr, n, target);
-                if (index != -1)
-                    cout << "Element found at index " << index << endl;
-                else
-                    cout << "Element not found" << endl;
-                break;
-            }
-            case 3:
-                cout << "\n-- Selected Algorithm: Bubble Sort --\n";
-                bubbleSort(arr, n);
-                break;
-            case 4:
-                cout << "\n-- Selected Algorithm: Merge Sort --\n";
-                mergeSort(arr, 0, n - 1);
-                printArray(arr, n);
-                break;
-            case 5:
-                cout << "\n-- Selected Algorithm: Quick Sort --\n";
-                quickSort(arr, 0, n - 1);
-                printArray(arr, n);
-                break;
-            case 6:
-                cout << "\n-- Selected Algorithm: Selection Sort --\n";
-                selectionSort(arr, n);
-                break;
-            case 7:
-                cout << "\n-- Selected Algorithm: Insertion Sort --\n";
-                insertionSort(arr, n);
-                break;
-            default:
-                cout << "Invalid choice" << endl;
+        case 1:
+        {
+            cout << "\n-- Selected Algorithm: Linear Search --\n";
+            cout << "Enter target value: ";
+            int target;
+            cin >> target;
+            measureSearchingTime(linearSearch, arr, n, target);
+            break;
+        }
+        case 2:
+        {
+            cout << "\n-- Selected Algorithm: Binary Search --\n";
+            cout << "Enter target value: ";
+            int target;
+            cin >> target;
+            quickSort(arr, 0, n - 1);
+            measureSearchingTime(binarySearch, arr, n, target);
+            break;
+        }
+        case 3:
+            cout << "\n-- Selected Algorithm: Bubble Sort --\n";
+            measureSortingTime(bubbleSort, arr, n);
+            break;
+        case 4:
+            cout << "\n-- Selected Algorithm: Merge Sort --\n";
+            measureSortingTime(mergeSortWrapper, arr, n);
+            cout << "\nSorted Array:\n";
+            printArray(arr, n);
+            break;
+        case 5:
+            cout << "\n-- Selected Algorithm: Quick Sort --\n";
+            measureSortingTime(quickSortWrapper, arr, n);
+            cout << "\nSorted Array:\n";
+            printArray(arr, n);
+            break;
+        case 6:
+            cout << "\n-- Selected Algorithm: Selection Sort --\n";
+            measureSortingTime(selectionSort, arr, n);
+            cout << "\nSorted Array:\n";
+            printArray(arr, n);
+            break;
+        case 7:
+            cout << "\n-- Selected Algorithm: Insertion Sort --\n";
+            measureSortingTime(insertionSort, arr, n);
+            cout << "\nSorted Array:\n";
+            printArray(arr, n);
+            break;
+        default:
+            cout << "Invalid choice" << endl;
         }
 
         cout << "\nWould you like to solve another problem? (y/n): ";
