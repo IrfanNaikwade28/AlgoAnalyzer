@@ -171,11 +171,11 @@ double measureSortingTime(void (*sortFunction)(int[], int), int arr[], int n)
     cout << "Time taken: " << timeTaken << " seconds" << endl;
 }
 void measureSearchingTime(int (*searchFunction)(int[], int, int), int arr[], int n, int target) {
-    clock_t start = clock(); // Start timer
-    int index = searchFunction(arr, n, target); // Call the search function
-    clock_t end = clock(); // End timer
+    clock_t start = clock(); 
+    int index = searchFunction(arr, n, target); 
+    clock_t end = clock(); 
 
-    double timeTaken = double(end - start) / CLOCKS_PER_SEC; // Calculate time taken
+    double timeTaken = double(end - start) / CLOCKS_PER_SEC; 
     cout << "Time taken: " << timeTaken << " seconds" << endl;
 
     if (index != -1)
@@ -195,10 +195,8 @@ int main()
         cout << "------------------------------------\n";
         cout << "\n-- Select an Algorithm by entering its number: ";
 
-        // Insert the current element at the correct position
 
 
-        // Print the array after each iteration
         int algo_choice;
         cin >> algo_choice;
 
