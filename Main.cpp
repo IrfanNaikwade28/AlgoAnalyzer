@@ -2,6 +2,12 @@
 #include <ctime>
 using namespace std;
 
+double timeBubble;
+double timeMerge;
+double timeQuick;
+double timeSelection;
+double timeInsertion;
+
 void printArray(int arr[], int n)
 {
     for (int i = 0; i < n; ++i)
@@ -161,7 +167,7 @@ void insertionSort(int arr[], int n)
         printArray(arr, n);
     }
 }
-double measureSortingTime(void (*sortFunction)(int[], int), int arr[], int n)
+double measureSortingTime(void (*sortFunction)(int[], int), int arr[], int n, int algoId)
 {
     clock_t start = clock();
     sortFunction(arr, n);
@@ -169,6 +175,158 @@ double measureSortingTime(void (*sortFunction)(int[], int), int arr[], int n)
 
     double timeTaken = double(end - start) / CLOCKS_PER_SEC;
     cout << "Time taken: " << timeTaken << " seconds" << endl;
+
+    switch (algoId)
+    {
+    case 3:
+        timeBubble = timeTaken;
+        break;
+    case 4:
+        timeMerge = timeTaken;
+        break;
+    case 5:
+        timeQuick = timeTaken;
+        break;
+    case 6:
+        timeSelection = timeTaken;
+        break;
+    case 7:
+        timeInsertion = timeTaken;
+        break;
+    }
+    return 1;
+}
+void compareSortingAlgo(int algoId, int n)
+{
+    cout << "\n\n\n---- Comparison ----" << endl;
+    if (algoId != 3)
+    {
+        cout << "\n-- Bubble Sort Time: " << endl;
+        cout << "original Array: " << endl;
+        cout << " | ";
+        for (int i = 0; i < n; i++)
+        {
+            cout << arrBubble[i] << " | ";
+        }
+        cout << "\n";
+        for (int i = 0; i < n * 3; i++)
+        {
+            cout << "--";
+        }
+        cout << "\n";
+        measureSortingTime(bubbleSort, arrBubble, n, 3);
+        cout << "\n----------------------------------------------\n";
+    }
+    if (algoId != 4)
+    {
+        cout << "\n-- Merge Sort Time: " << endl;
+        cout << "original Array: " << endl;
+        cout << " | ";
+        for (int i = 0; i < n; i++)
+        {
+            cout << arrMerge[i] << " | ";
+        }
+        cout << "\n";
+        for (int i = 0; i < n * 3; i++)
+        {
+            cout << "--";
+        }
+        cout << "\n";
+        measureSortingTime(mergeSortWrapper, arrMerge, n, 4);
+        cout << "\n----------------------------------------------\n";
+    }
+    if (algoId != 5)
+    {
+        cout << "\n-- Quick Sort Time: " << endl;
+        cout << "original Array: " << endl;
+        cout << " | ";
+        for (int i = 0; i < n; i++)
+        {
+            cout << arrQuick[i] << " | ";
+        }
+        cout << "\n";
+        for (int i = 0; i < n * 3; i++)
+        {
+            cout << "--";
+        }
+        cout << "\n";
+        measureSortingTime(quickSortWrapper, arrQuick, n, 5);
+        cout << "\n----------------------------------------------\n";
+    }
+    if (algoId != 6)
+    {
+        cout << "\n-- Selection Sort Time: " << endl;
+        cout << "original Array: " << endl;
+        cout << " | ";
+        for (int i = 0; i < n; i++)
+        {
+            cout << arrSelection[i] << " | ";
+        }
+        cout << "\n";
+        for (int i = 0; i < n * 3; i++)
+        {
+            cout << "--";
+        }
+        cout << "\n";
+        measureSortingTime(selectionSort, arrSelection, n, 6);
+        cout << "\n----------------------------------------------\n";
+    }
+    if (algoId != 7)
+    {
+        cout << "\n-- Insertion Sort Time: " << endl;
+        cout << "original Array: " << endl;
+        cout << " | ";
+        for (int i = 0; i < n; i++)
+        {
+            cout << arrInsertion[i] << " | ";
+        }
+        cout << "\n";
+        for (int i = 0; i < n * 3; i++)
+        {
+            cout << "--";
+        }
+        cout << "\n";
+        measureSortingTime(insertionSort, arrInsertion, n, 7);
+        cout << "\n----------------------------------------------\n";
+    }
+    cout << "\n\n\n-- Conclusion --" << endl;
+    double timesOfAlgo[5] = {timeBubble, timeMerge, timeQuick, timeSelection, timeInsertion};
+    double minValue = timesOfAlgo[0];
+    int count = 0;
+
+    for (int i = 0; i < 5; i++)
+    {
+        if (timesOfAlgo[i] < minValue)
+        {
+            minValue = timesOfAlgo[i];
+            count = 1;
+        }
+        else if (timesOfAlgo[i] == minValue)
+        {
+            count++;
+        }
+    }
+
+    cout << "\nEfficient Algorithm Count: " << count << endl;
+
+    cout << "\n-- Efficient Algorithm with Time: " << minValue << endl;
+    for (int i = 0; i < 5; i++)
+    {
+        if (timesOfAlgo[i] == minValue)
+        {
+            cout << "   " << "* ";
+            if (i == 0)
+                cout << "Bubble Sort" << endl;
+            else if (i == 1)
+                cout << "Merge Sort" << endl;
+            else if (i == 2)
+                cout << "Quick Sort" << endl;
+            else if (i == 3)
+                cout << "Selection Sort" << endl;
+            else if (i == 4)
+                cout << "Insertion Sort" << endl;
+        }
+    }
 }
 void measureSearchingTime(int (*searchFunction)(int[], int, int), int arr[], int n, int target) {
     clock_t start = clock(); 
@@ -235,29 +393,31 @@ int main()
         }
         case 3:
             cout << "\n-- Selected Algorithm: Bubble Sort --\n";
-            measureSortingTime(bubbleSort, arr, n);
+            measureSortingTime(bubbleSort, arr, n, 3);
+            compareSortingAlgo(3, n);
             break;
         case 4:
             cout << "\n-- Selected Algorithm: Merge Sort --\n";
-            measureSortingTime(mergeSortWrapper, arr, n);
+            measureSortingTime(mergeSortWrapper, arr, n, 4);
             cout << "\nSorted Array:\n";
             printArray(arr, n);
+            compareSortingAlgo(4, n);
             break;
         case 5:
             cout << "\n-- Selected Algorithm: Quick Sort --\n";
-            measureSortingTime(quickSortWrapper, arr, n);
+            measureSortingTime(quickSortWrapper, arr, n,5);
             cout << "\nSorted Array:\n";
             printArray(arr, n);
             break;
         case 6:
             cout << "\n-- Selected Algorithm: Selection Sort --\n";
-            measureSortingTime(selectionSort, arr, n);
+            measureSortingTime(selectionSort, arr, n,6);
             cout << "\nSorted Array:\n";
             printArray(arr, n);
             break;
         case 7:
             cout << "\n-- Selected Algorithm: Insertion Sort --\n";
-            measureSortingTime(insertionSort, arr, n);
+            measureSortingTime(insertionSort, arr, n,7);
             cout << "\nSorted Array:\n";
             printArray(arr, n);
             break;
