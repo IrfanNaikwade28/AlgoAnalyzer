@@ -183,6 +183,9 @@ void measureSearchingTime(int (*searchFunction)(int[], int, int), int arr[], int
     else
         cout << "Element not found" << endl;
 }
+void compareSortingAlgo(){
+    
+}
 int main()
 {
     char choice;
@@ -235,28 +238,33 @@ int main()
         }
         case 3:
             cout << "\n-- Selected Algorithm: Bubble Sort --\n";
+            printArray(arr, n);
             measureSortingTime(bubbleSort, arr, n);
             break;
         case 4:
             cout << "\n-- Selected Algorithm: Merge Sort --\n";
+            printArray(arr, n);
             measureSortingTime(mergeSortWrapper, arr, n);
             cout << "\nSorted Array:\n";
             printArray(arr, n);
             break;
         case 5:
             cout << "\n-- Selected Algorithm: Quick Sort --\n";
+            printArray(arr, n);
             measureSortingTime(quickSortWrapper, arr, n);
             cout << "\nSorted Array:\n";
             printArray(arr, n);
             break;
         case 6:
             cout << "\n-- Selected Algorithm: Selection Sort --\n";
+            printArray(arr, n);
             measureSortingTime(selectionSort, arr, n);
             cout << "\nSorted Array:\n";
             printArray(arr, n);
             break;
         case 7:
             cout << "\n-- Selected Algorithm: Insertion Sort --\n";
+            printArray(arr, n);
             measureSortingTime(insertionSort, arr, n);
             cout << "\nSorted Array:\n";
             printArray(arr, n);
