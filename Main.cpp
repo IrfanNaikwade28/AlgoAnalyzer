@@ -361,6 +361,76 @@ void measureSearchingTime(int (*searchFunction)(int[], int, int), int arr[], int
         break;
     }
 }
+void compareSearchingAlgo(int algoId, int target, int n)
+{
+    cout << "\n\n\n---- Comparison ----" << endl;
+    if (algoId != 1)
+    {
+        cout << "\n-- Linear Search Time: " << endl;
+        cout << "original Array: " << endl;
+        cout << " | ";
+        for (int i = 0; i < n; i++)
+        {
+            cout << arrLinearSearch[i] << " | ";
+        }
+        cout << "\n";
+        for (int i = 0; i < n * 3; i++)
+        {
+            cout << "--";
+        }
+        cout << "\n";
+        measureSearchingTime(linearSearch, arrLinearSearch, n, target, 1);
+    }
+    if (algoId != 2)
+    {
+        cout << "\n-- Binary Search Time: " << endl;
+        cout << "original Array: " << endl;
+        cout << " | ";
+        for (int i = 0; i < n; i++)
+        {
+            cout << arrBinarySearch[i] << " | ";
+        }
+        cout << "\n";
+        for (int i = 0; i < n * 3; i++)
+        {
+            cout << "--";
+        }
+        cout << "\n";
+        quickSort(arrBinarySearch, 0, n - 1);
+        cout << "\n";
+        measureSearchingTime(binarySearch, arrBinarySearch, n, target, 2);
+    }
+
+    cout << "\n\n-- Conclusion --" << endl;
+    double minValue;
+    int count = 0;
+    if (timeLinearSearch < timeBinarySearch)
+    {
+        minValue = timeLinearSearch;
+        count = 1;
+    }
+    else if (timeLinearSearch > timeBinarySearch)
+    {
+        minValue = timeBinarySearch;
+        count = 1;
+    }
+    else if (timeLinearSearch == timeBinarySearch)
+    {
+        minValue = timeBinarySearch;
+    }
+
+    cout << "\n-- Efficient Algorithm with Time: " << minValue << endl;
+    if (minValue==timeLinearSearch)
+    {
+        cout << "   " << "* ";
+        cout << "Linear Search" << endl;
+    }
+    if (minValue==timeBinarySearch)
+    {
+        cout << "   " << "* ";
+        cout << "Linear Search" << endl;
+    }
+}
 int main()
 {
     char choice;
