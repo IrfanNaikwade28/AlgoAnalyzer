@@ -2,6 +2,17 @@
 #include <ctime>
 using namespace std;
 
+int arr[100];
+int arrBubble[100];
+int arrLinearSearch[100];
+int arrBinarySearch[100];
+int arrMerge[100];
+int arrQuick[100];
+int arrSelection[100];
+int arrInsertion[100];
+
+double timeLinearSearch;
+double timeBinarySearch;
 double timeBubble;
 double timeMerge;
 double timeQuick;
@@ -15,6 +26,20 @@ void printArray(int arr[], int n)
         cout << arr[i] << " ";
     }
     cout << endl;
+}
+void printArray(int arr[], int n, const char *c)
+{
+    for (int i = 0; i < n; ++i)
+    {
+        cout << arr[i] << c;
+    }
+    cout << endl;
+}
+void delay(int ms)
+{
+    clock_t start_time = clock();
+    while (clock() < start_time + ms * (CLOCKS_PER_SEC / 1000))
+        ;
 }
 int linearSearch(int arr[], int n, int target)
 {
@@ -57,8 +82,6 @@ void bubbleSort(int arr[], int n)
             }
         }
     }
-    cout << "\nSorted Array:\n";
-    printArray(arr, n);
 }
 void selectionSort(int arr[], int n)
 {
@@ -107,7 +130,8 @@ void quickSort(int arr[], int low, int high)
         quickSort(arr, pi + 1, high);
     }
 }
-void quickSortWrapper(int arr[], int n) {
+void quickSortWrapper(int arr[], int n)
+{
     quickSort(arr, 0, n - 1);
 }
 void merge(int arr[], int left, int mid, int right)
@@ -148,7 +172,8 @@ void mergeSort(int arr[], int left, int right)
         merge(arr, left, mid, right);
     }
 }
-void mergeSortWrapper(int arr[], int n) {
+void mergeSortWrapper(int arr[], int n)
+{
     mergeSort(arr, 0, n - 1);
 }
 
@@ -198,9 +223,11 @@ double measureSortingTime(void (*sortFunction)(int[], int), int arr[], int n, in
 }
 void compareSortingAlgo(int algoId, int n)
 {
+    delay(1500);
     cout << "\n\n\n---- Comparison ----" << endl;
     if (algoId != 3)
     {
+        delay(500);
         cout << "\n-- Bubble Sort Time: " << endl;
         cout << "original Array: " << endl;
         cout << " | ";
@@ -214,11 +241,13 @@ void compareSortingAlgo(int algoId, int n)
             cout << "--";
         }
         cout << "\n";
+        delay(500);
         measureSortingTime(bubbleSort, arrBubble, n, 3);
         cout << "\n----------------------------------------------\n";
     }
     if (algoId != 4)
     {
+        delay(500);
         cout << "\n-- Merge Sort Time: " << endl;
         cout << "original Array: " << endl;
         cout << " | ";
@@ -232,11 +261,13 @@ void compareSortingAlgo(int algoId, int n)
             cout << "--";
         }
         cout << "\n";
+        delay(500);
         measureSortingTime(mergeSortWrapper, arrMerge, n, 4);
         cout << "\n----------------------------------------------\n";
     }
     if (algoId != 5)
     {
+        delay(500);
         cout << "\n-- Quick Sort Time: " << endl;
         cout << "original Array: " << endl;
         cout << " | ";
@@ -250,11 +281,13 @@ void compareSortingAlgo(int algoId, int n)
             cout << "--";
         }
         cout << "\n";
+        delay(500);
         measureSortingTime(quickSortWrapper, arrQuick, n, 5);
         cout << "\n----------------------------------------------\n";
     }
     if (algoId != 6)
     {
+        delay(500);
         cout << "\n-- Selection Sort Time: " << endl;
         cout << "original Array: " << endl;
         cout << " | ";
@@ -268,11 +301,13 @@ void compareSortingAlgo(int algoId, int n)
             cout << "--";
         }
         cout << "\n";
+        delay(500);
         measureSortingTime(selectionSort, arrSelection, n, 6);
         cout << "\n----------------------------------------------\n";
     }
     if (algoId != 7)
     {
+        delay(500);
         cout << "\n-- Insertion Sort Time: " << endl;
         cout << "original Array: " << endl;
         cout << " | ";
@@ -286,9 +321,12 @@ void compareSortingAlgo(int algoId, int n)
             cout << "--";
         }
         cout << "\n";
+        delay(500);
         measureSortingTime(insertionSort, arrInsertion, n, 7);
         cout << "\n----------------------------------------------\n";
     }
+
+    delay(1500);
     cout << "\n\n\n-- Conclusion --" << endl;
     double timesOfAlgo[5] = {timeBubble, timeMerge, timeQuick, timeSelection, timeInsertion};
     double minValue = timesOfAlgo[0];
@@ -308,7 +346,7 @@ void compareSortingAlgo(int algoId, int n)
     }
 
     cout << "\nEfficient Algorithm Count: " << count << endl;
-
+    delay(20);
     cout << "\n-- Efficient Algorithm with Time: " << minValue << endl;
     for (int i = 0; i < 5; i++)
     {
@@ -340,12 +378,14 @@ void measureSearchingTime(int (*searchFunction)(int[], int, int), int arr[], int
 
     if (index != -1)
     {
+        delay(800);
         cout << "--------------------------------------";
         cout << "\nElement found at index " << index << endl;
         cout << "--------------------------------------\n";
     }
     else
     {
+        delay(800);
         cout << "--------------------------------------";
         cout << "\nElement not found" << endl;
         cout << "--------------------------------------\n";
@@ -363,9 +403,11 @@ void measureSearchingTime(int (*searchFunction)(int[], int, int), int arr[], int
 }
 void compareSearchingAlgo(int algoId, int target, int n)
 {
+    delay(1500);
     cout << "\n\n\n---- Comparison ----" << endl;
     if (algoId != 1)
     {
+        delay(500);
         cout << "\n-- Linear Search Time: " << endl;
         cout << "original Array: " << endl;
         cout << " | ";
@@ -379,10 +421,12 @@ void compareSearchingAlgo(int algoId, int target, int n)
             cout << "--";
         }
         cout << "\n";
+        delay(500);
         measureSearchingTime(linearSearch, arrLinearSearch, n, target, 1);
     }
     if (algoId != 2)
     {
+        delay(500);
         cout << "\n-- Binary Search Time: " << endl;
         cout << "original Array: " << endl;
         cout << " | ";
@@ -398,9 +442,11 @@ void compareSearchingAlgo(int algoId, int target, int n)
         cout << "\n";
         quickSort(arrBinarySearch, 0, n - 1);
         cout << "\n";
+        delay(500);
         measureSearchingTime(binarySearch, arrBinarySearch, n, target, 2);
     }
 
+    delay(1500);
     cout << "\n\n-- Conclusion --" << endl;
     double minValue;
     int count = 0;
@@ -419,16 +465,22 @@ void compareSearchingAlgo(int algoId, int target, int n)
         minValue = timeBinarySearch;
     }
 
+    delay(200);
     cout << "\n-- Efficient Algorithm with Time: " << minValue << endl;
-    if (minValue==timeLinearSearch)
+    if (minValue == timeLinearSearch)
     {
         cout << "   " << "* ";
         cout << "Linear Search" << endl;
     }
-    if (minValue==timeBinarySearch)
+    else if (minValue == timeBinarySearch)
     {
         cout << "   " << "* ";
-        cout << "Linear Search" << endl;
+        cout << "Binary Search" << endl;
+    }
+    else
+    {
+        cout << "   " << "* ";
+        cout << "Both are Efficient..." << endl;
     }
 }
 int main()
@@ -443,8 +495,6 @@ int main()
         cout << "------------------------------------\n";
         cout << "\n-- Select an Algorithm by entering its number: ";
 
-
-
         int algo_choice;
         cin >> algo_choice;
 
@@ -452,14 +502,22 @@ int main()
         int n;
         cin >> n;
 
-        int arr[100];
-
         cout << "Enter array elements separated by spaces:\n";
-        for (int i = 0; i < n; ++i)
+        cout << "--> ";
+        for (int i = 0; i < n; i++)
         {
             cin >> arr[i];
         }
-
+        for (int i = 0; i < n; i++)
+        {
+            arrBubble[i] = arr[i];
+            arrLinearSearch[i] = arr[i];
+            arrBinarySearch[i] = arr[i];
+            arrMerge[i] = arr[i];
+            arrQuick[i] = arr[i];
+            arrSelection[i] = arr[i];
+            arrInsertion[i] = arr[i];
+        }
         switch (algo_choice)
         {
         case 1:
@@ -468,7 +526,12 @@ int main()
             cout << "Enter target value: ";
             int target;
             cin >> target;
-            measureSearchingTime(linearSearch, arr, n, target);
+            cout << "| ";
+            printArray(arr, n, " | ");
+            cout << "\n";
+            measureSearchingTime(linearSearch, arr, n, target, 1);
+            delay(1000);
+            compareSearchingAlgo(1, target, n);
             break;
         }
         case 2:
@@ -477,44 +540,79 @@ int main()
             cout << "Enter target value: ";
             int target;
             cin >> target;
+            cout << "| ";
+            printArray(arr, n, " | ");
+            cout << "\n";
+            cout << "\n-- Sorting:\n";
             quickSort(arr, 0, n - 1);
-            measureSearchingTime(binarySearch, arr, n, target);
+            delay(500);
+            cout << "\n-- Sorted Elements:\n";
+            cout << "| ";
+            printArray(arr, n, " | ");
+            cout << "\n";
+            measureSearchingTime(binarySearch, arr, n, target, 2);
+            delay(1000);
+            compareSearchingAlgo(2, target, n);
             break;
         }
         case 3:
             cout << "\n-- Selected Algorithm: Bubble Sort --\n";
+            cout << "| ";
+            printArray(arr, n, " | ");
             measureSortingTime(bubbleSort, arr, n, 3);
+            delay(1000);
+            cout << "\n-- Sorted Array:\n";
+            cout << "| ";
+            printArray(arr, n, " | ");
             compareSortingAlgo(3, n);
             break;
         case 4:
             cout << "\n-- Selected Algorithm: Merge Sort --\n";
+            cout << "| ";
+            printArray(arr, n, " | ");
             measureSortingTime(mergeSortWrapper, arr, n, 4);
-            cout << "\nSorted Array:\n";
-            printArray(arr, n);
+            delay(1000);
+            cout << "\n-- Sorted Array:\n";
+            cout << "| ";
+            printArray(arr, n, " | ");
             compareSortingAlgo(4, n);
             break;
         case 5:
             cout << "\n-- Selected Algorithm: Quick Sort --\n";
-            measureSortingTime(quickSortWrapper, arr, n,5);
-            cout << "\nSorted Array:\n";
-            printArray(arr, n);
+            cout << "| ";
+            printArray(arr, n, " | ");
+            measureSortingTime(quickSortWrapper, arr, n, 5);
+            delay(1000);
+            cout << "\n-- Sorted Array:\n";
+            cout << "| ";
+            printArray(arr, n, " | ");
+            compareSortingAlgo(5, n);
             break;
         case 6:
             cout << "\n-- Selected Algorithm: Selection Sort --\n";
-            measureSortingTime(selectionSort, arr, n,6);
-            cout << "\nSorted Array:\n";
-            printArray(arr, n);
+            cout << "| ";
+            printArray(arr, n, " | ");
+            measureSortingTime(selectionSort, arr, n, 6);
+            delay(1000);
+            cout << "\n-- Sorted Array:\n";
+            cout << "| ";
+            printArray(arr, n, " | ");
+            compareSortingAlgo(6, n);
             break;
         case 7:
             cout << "\n-- Selected Algorithm: Insertion Sort --\n";
-            measureSortingTime(insertionSort, arr, n,7);
-            cout << "\nSorted Array:\n";
-            printArray(arr, n);
+            cout << "| ";
+            printArray(arr, n, " | ");
+            measureSortingTime(insertionSort, arr, n, 7);
+            delay(1000);
+            cout << "\n-- Sorted Array:\n";
+            cout << "| ";
+            printArray(arr, n, " | ");
+            compareSortingAlgo(7, n);
             break;
         default:
             cout << "Invalid choice" << endl;
         }
-
         cout << "\nWould you like to solve another problem? (y/n): ";
         cin >> choice;
     } while (choice == 'y' || choice == 'Y');
