@@ -328,18 +328,38 @@ void compareSortingAlgo(int algoId, int n)
         }
     }
 }
-void measureSearchingTime(int (*searchFunction)(int[], int, int), int arr[], int n, int target) {
-    clock_t start = clock(); 
-    int index = searchFunction(arr, n, target); 
-    clock_t end = clock(); 
+void measureSearchingTime(int (*searchFunction)(int[], int, int), int arr[], int n, int target, int algoId)
+{
+    clock_t start = clock();
+    int index = searchFunction(arr, n, target);
+    clock_t end = clock();
 
-    double timeTaken = double(end - start) / CLOCKS_PER_SEC; 
-    cout << "Time taken: " << timeTaken << " seconds" << endl;
+    cout << "\n";
+    double timeTaken = double(end - start) / CLOCKS_PER_SEC;
+    cout << "\nTime taken: " << timeTaken << " seconds" << endl;
 
     if (index != -1)
-        cout << "Element found at index " << index << endl;
+    {
+        cout << "--------------------------------------";
+        cout << "\nElement found at index " << index << endl;
+        cout << "--------------------------------------\n";
+    }
     else
-        cout << "Element not found" << endl;
+    {
+        cout << "--------------------------------------";
+        cout << "\nElement not found" << endl;
+        cout << "--------------------------------------\n";
+    }
+
+    switch (algoId)
+    {
+    case 1:
+        timeLinearSearch = timeTaken;
+        break;
+    case 2:
+        timeBinarySearch = timeTaken;
+        break;
+    }
 }
 int main()
 {
